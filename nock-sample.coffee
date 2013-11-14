@@ -12,4 +12,6 @@ for verb in ["GET", "POST", "PUT", "DELETE"]
   .intercept("/matchall", verb)
 
 module.exports = (req, res) ->
-  scopes[req.method].replyWithFile 200, "#{req.url.substr 1}/#{req.method}.json"
+  scopes[req.method].replyWithFile 200,
+    "#{__dirname}#{req.url}/#{req.method}.json",
+    {"Content-Type": "application/json"}
