@@ -1,0 +1,5 @@
+.idea/
+atlassian-ide-plugin.xml
+fake-server.iml
+
+node_modules/
