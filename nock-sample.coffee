@@ -1,21 +1,15 @@
-nock = require "nock"
-
 # let nock intercept the request we made
 # this allows us to use the full power of nock to respond the way we want
-scopeGet = nock("http://localhost")
-.persist()
-.filteringPath((path) ->
-    "/matchall"
-  )
-.intercept("/matchall", "GET")
+nock = require "nock"
 
-scopePost = nock("http://localhost")
-.persist()
-.filteringPath((path) ->
-    "/matchall"
-  )
-.intercept("/matchall", "POST")
+scopes = {}
+for verb in ["GET", "POST", "PUT", "DELETE"]
+  scopes[verb] = nock("http://localhost")
+  .persist()
+  .filteringPath((path) ->
+      "/matchall"
+    )
+  .intercept("/matchall", verb)
 
 module.exports = (req, res) ->
-  scopeGet.replyWithFile 200, "#{req.url.substr 1}.json"
-  scopePost.replyWithFile 200, "#{req.url.substr 1}.json"
+  scopes[req.method].replyWithFile 200, "#{req.url.substr 1}/#{req.method}.json"
