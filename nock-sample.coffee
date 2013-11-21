@@ -1,6 +1,7 @@
 # let nock intercept the request we made
 # this allows us to use the full power of nock to respond the way we want
 nock = require "nock"
+fs = require "fs"
 
 scopes = {}
 for verb in ["GET", "POST", "PUT", "DELETE"]
@@ -12,6 +13,10 @@ for verb in ["GET", "POST", "PUT", "DELETE"]
   .intercept("/matchall", verb)
 
 module.exports = (req, res) ->
-  scopes[req.method].replyWithFile 200,
-    "#{__dirname}#{req.url}/#{req.method}.json",
-    {"Content-Type": "application/json"}
+  file = "#{__dirname}#{req.url}/#{req.method}.json"
+  if fs.existsSync file
+    scopes[req.method].replyWithFile 200, file,
+      "Content-Type": "application/json"
+      "Access-Control-Allow-Origin": "*"
+  else
+    scopes[req.method].reply 404, "404 Not Found"
