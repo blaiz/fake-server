@@ -21,3 +21,5 @@ httpProxy.createServer((req, res, proxy) ->
   # send request again, this time on port 80
   proxy.proxyRequest(req, res, {host, port: 80})
 ).listen port
+
+console.log "Listening for requests at #{host}:#{port}"
