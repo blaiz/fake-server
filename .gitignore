@@ -1,3 +1,5 @@
+*.js
+
 .idea/
 atlassian-ide-plugin.xml
 fake-server.iml

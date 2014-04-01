@@ -1,7 +1,7 @@
 {
-  "name": "FakeServer",
-  "version": "0.0.0",
-  "description": "",
+  "name": "fake-server",
+  "version": "0.1.2",
+  "description": "Nock.js-based server to fake API responses",
   "main": "app.js",
   "dependencies": {
     "nock": "~0.23.0",
@@ -9,8 +9,26 @@
   },
   "devDependencies": {},
   "scripts": {
+    "build":        "coffee --compile *.coffee",
+    "prepublish":   "coffee --compile *.coffee",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "BSD-2-Clause"
+  "author": "Blaiz <account@savordesign.com> (https://github.com/blaiz)",
+  "license": "GNU GPL v3",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/blaiz/fake-server.git"
+  },
+  "keywords": [
+    "fake",
+    "api",
+    "responses"
+  ],
+  "bugs": {
+    "url": "https://github.com/blaiz/fake-server/issues"
+  },
+  "homepage": "https://github.com/blaiz/fake-server",
+  "engines": {
+    "node": ">=0.10.0"
+  }
 }

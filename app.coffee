@@ -2,7 +2,8 @@ httpProxy = require "http-proxy"
 
 port = process.argv[3] or 8080 # port to listen to; on OS X, sudo is required to listen to port 80
 host = "localhost"
-nock_setup_file = process.argv[2] or "nock-sample.coffee"
+sample_nock_file = "./nock-sample#{__filename.substr(__filename.lastIndexOf('.'))}" # the last part is to get .js or .coffee
+nock_setup_file = process.argv[2] or sample_nock_file
 
 # try to include the custom nock usage file specified as the first argument in the command line
 try
