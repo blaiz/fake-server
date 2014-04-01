@@ -6,11 +6,13 @@ fs = require "fs"
 url = require "url"
 
 scopes = {}
-for verb in ["GET", "POST", "PUT", "DELETE"]
+for verb in ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
   scopes[verb] = nock("http://localhost")
   .defaultReplyHeaders(
       "Content-Type": "text/plain"
       "Access-Control-Allow-Origin": "*"
+      "Access-Control-Allow-Methods": "POST, GET, PUT, DELETE, OPTIONS"
+      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
       "X-Powered-By": "Nock"
     )
   .persist()
@@ -20,6 +22,9 @@ for verb in ["GET", "POST", "PUT", "DELETE"]
   .intercept("/matchall", verb)
 
 module.exports = (req, res) ->
+  if req.method is "OPTIONS"
+    return scopes[req.method].reply 200, "200 OK"
+
   urlPieces = url.parse req.url, true
 
   filePatterns = [
@@ -28,6 +33,7 @@ module.exports = (req, res) ->
   ]
 
   for file in filePatterns
+    console.log "Looking for file #{file}"
     if fs.existsSync file
       returnFile = file
       break
